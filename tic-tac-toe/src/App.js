@@ -1,25 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import {useState} from 'react';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+function Square({value, onSquareClick}) {
+	return(
+		<button className="square" onClick = {onSquareClick}>
+		 {value}
+		</button>
+	);
 }
 
-export default App;
+function Board({xIsNext, squares, onPlay}) {
+	function handleClick(i){
+		if(calculateWinner(squares) || squares[i]) {
+			return;
+		}
+		const nextSquares = squares.slice();
+		if(xisNext) {
+			nextSquares[i] = 'X';
+		}
+		else{
+			nextSquares[i] = 'O';
+		}
+		onPlay(nextSquares);
+	}
+	const winner = calculateWinner(squares);
+	let status;
+	if(winner){
+		status = 'Winner: '+ winner;
+	}
+	else{
+		status = 'Next Player: '+ (xIsNext ? 'X' : 'O');
+	}
+
+
